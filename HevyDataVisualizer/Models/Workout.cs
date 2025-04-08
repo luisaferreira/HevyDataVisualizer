@@ -11,9 +11,9 @@ public class Workout
     public string ExerciseNotes { get; set; }
     public int SetIndex { get; set; }
     public string SetType { get; set; }
-    public int WeightKg { get; set; }
-    public int Reps { get; set; }
-    public int DistanceKm { get; set; }
-    public int DurationSeconds { get; set; }
-    public int Rpe { get; set; }
+    public string WeightKg { get; set; }
+    public string Reps { get; set; }
+    public string DistanceKm { get; set; }
+    public string DurationSeconds { get; set; }
+    public string Rpe { get; set; }
 }
