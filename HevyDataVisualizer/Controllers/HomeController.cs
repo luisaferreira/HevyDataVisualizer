@@ -30,6 +30,6 @@ public class HomeController : Controller
             workout = csv.GetRecords<Workout>().ToList();
         }
 
-        return Ok();
+        return View("_FileResults", workout);
     }
 }

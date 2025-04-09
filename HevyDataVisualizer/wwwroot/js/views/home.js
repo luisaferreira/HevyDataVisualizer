@@ -12,6 +12,9 @@
             processData: false,
             contentType: false,
             cache: false,
+            success: function (data) {
+                $("#divResults").html(data);
+            },
             error: function (err) {
                 let mensagem = err.responseJSON;
                 console.log(mensagem);

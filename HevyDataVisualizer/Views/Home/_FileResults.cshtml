@@ -1,0 +1,59 @@
+﻿@model IEnumerable<HevyDataVisualizer.Models.Workout>;
+@{
+    Layout = null;
+}
+
+
+@{
+    var workoutsByDate = Model.GroupBy(x => x.StartTime)
+            .Select(x => x.First())
+            .ToList();
+}
+
+<div class="accordion" id="accordionExample">
+    @foreach (var workout in workoutsByDate)
+    {
+        var idAccordion = "collapse" + workout.StartTime.ToString("yyyyMMddHHss");
+        var currentWorkout = Model.Where(x => x.StartTime == workout.StartTime);
+        var currentWorkoutExercises = currentWorkout.Select(x => x.ExerciseTitle).Distinct();
+
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#@idAccordion" aria-expanded="false" aria-controls="@idAccordion">
+                    @workout.Title - @workout.StartTime
+                </button>
+            </h2>
+            <div id="@idAccordion" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    @foreach (var exercise in currentWorkoutExercises)
+                    {
+                        var exercisesSets = currentWorkout.Where(x => x.ExerciseTitle == exercise);
+
+                        <p>@exercise</p>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Set Type</th>
+                                    <th scope="col">Weight</th>
+                                    <th scope="col">Reps</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var set in exercisesSets)
+                                {
+                                    <tr>
+                                        <th scope="row">@set.SetIndex</th>
+                                        <td>@set.SetType</td>
+                                        <td>@set.WeightKg kg</td>
+                                        <td>@set.Reps</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+</div>
